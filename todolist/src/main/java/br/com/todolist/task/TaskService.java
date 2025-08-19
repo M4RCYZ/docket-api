@@ -15,4 +15,9 @@ public class TaskService {
     public Task create(Task task) {
         return this.taskRepository.save(task);
     }
+
+    // Adicionar este método dentro da classe TaskService
+    public java.util.List<Task> listAll() {
+        return this.taskRepository.findAll();
+    }
 }

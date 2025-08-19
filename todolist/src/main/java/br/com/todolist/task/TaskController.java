@@ -17,4 +17,10 @@ public class TaskController {
         // O controller chama o serviço para fazer o trabalho
         return this.taskService.create(task);
     }
+
+    // Adicionar este método dentro da classe TaskController
+    @GetMapping("/")
+    public java.util.List<Task> listAll() {
+        return this.taskService.listAll();
+    }
 }
