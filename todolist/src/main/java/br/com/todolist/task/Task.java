@@ -1,5 +1,3 @@
-// Local: src/main/java/br/com/todolist/task/Task.java
-
 package br.com.todolist.task;
 
 import jakarta.persistence.Column;

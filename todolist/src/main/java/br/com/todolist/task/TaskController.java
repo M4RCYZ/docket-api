@@ -1,9 +1,10 @@
-// Local: src/main/java/br/com/todolist/task/TaskController.java
-
 package br.com.todolist.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*; // <-- Importante
+
+import java.util.UUID;
 
 @RestController // <-- Define que é um controller
 @RequestMapping("/tasks") // <-- Define a rota base
@@ -19,8 +20,16 @@ public class TaskController {
     }
 
     // Adicionar este método dentro da classe TaskController
-    @GetMapping("/")
+    @GetMapping("/tasks")
     public java.util.List<Task> listAll() {
         return this.taskService.listAll();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        this.taskService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

@@ -1,9 +1,9 @@
-// Local: src/main/java/br/com/todolist/task/TaskService.java
-
 package br.com.todolist.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service // <-- A única anotação de componente necessária aqui
 public class TaskService {
@@ -20,4 +20,10 @@ public class TaskService {
     public java.util.List<Task> listAll() {
         return this.taskRepository.findAll();
     }
+
+    // Adicionar este método dentro da classe TaskService
+    public void delete(UUID id) {
+        this.taskRepository.deleteById(id);
+    }
+
 }
