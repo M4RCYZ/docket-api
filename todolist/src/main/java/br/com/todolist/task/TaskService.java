@@ -21,6 +21,11 @@ public class TaskService {
         return this.taskRepository.findAll();
     }
 
+    public Task update(UUID id, Task taskDetails) {
+        taskDetails.setId(id);
+        return this.taskRepository.save(taskDetails);
+    }
+
     // Adicionar este método dentro da classe TaskService
     public void delete(UUID id) {
         this.taskRepository.deleteById(id);

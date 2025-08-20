@@ -25,11 +25,15 @@ public class TaskController {
         return this.taskService.listAll();
     }
 
+    // UPDATE -> PUT /tasks/{id}
+    @PutMapping("/{id}")
+    public Task update(@RequestBody Task taskDetails, @PathVariable UUID id) {
+        return this.taskService.update(id, taskDetails);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         this.taskService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }
