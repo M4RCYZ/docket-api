@@ -14,7 +14,14 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public User create(User user) {
-        // Criptografa a senha antes de salvar
+        // Verifica se o username já existe no banco
+        var userExists = this.userRepository.findByUsername(user.getUsername());
+        if (userExists != null) {
+            // Se existir, retorna null para o controller tratar o erro
+            return null;
+        }
+
+        // Criptografa a senha
         String hashedPassword = this.passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
 

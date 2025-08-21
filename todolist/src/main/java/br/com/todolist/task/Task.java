@@ -1,9 +1,9 @@
+// Local: src/main/java/br/com/todolist/task/Task.java
+
 package br.com.todolist.task;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import br.com.todolist.user.User; // <-- IMPORTANTE: Importar a classe User
+import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -18,8 +18,9 @@ public class Task {
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(name = "id_user")
-    private UUID idUser;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     private String description;
     private String title;

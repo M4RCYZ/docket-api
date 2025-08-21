@@ -1,3 +1,5 @@
+// Local: src/main/java/br/com/todolist/config/SecurityConfig.java
+
 package br.com.todolist.config;
 
 import org.springframework.context.annotation.Bean;
@@ -15,12 +17,12 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable()) // Desabilita CSRF (importante para APIs stateless)
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/users/").permitAll() // Permite acesso sem autenticação a /users/
-                        .anyRequest().authenticated() // Exige autenticação para qualquer outra requisição
+                        .requestMatchers("/users/").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults()) // Habilita autenticação básica (por enquanto)
+                .httpBasic(withDefaults()) // <-- Agora usamos o filtro padrão do Spring
                 .build();
     }
 }

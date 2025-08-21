@@ -1,9 +1,13 @@
 package br.com.todolist.task;
 
+import br.com.todolist.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*; // <-- Importante
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController // <-- Define que é um controller
@@ -13,16 +17,18 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @PostMapping("/") // <-- Define que o método responde a POST
-    public Task create(@RequestBody Task task) { // <-- Pega o JSON do corpo da requisição
-        // O controller chama o serviço para fazer o trabalho
-        return this.taskService.create(task);
+    @PostMapping("/")
+    public ResponseEntity create(@RequestBody Task task, @AuthenticationPrincipal User user) {
+        task.setUser(user); // Associa o usuário logado à tarefa
+        var createdTask = this.taskService.create(task);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
     }
 
     // Adicionar este método dentro da classe TaskController
-    @GetMapping("/tasks")
-    public java.util.List<Task> listAll() {
-        return this.taskService.listAll();
+    // Dentro da classe TaskController
+    @GetMapping("/")
+    public List<TaskDTO> list(@AuthenticationPrincipal User user) {
+        return this.taskService.list(user.getId());
     }
 
     // UPDATE -> PUT /tasks/{id}
