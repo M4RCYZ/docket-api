@@ -1,6 +1,7 @@
 package br.com.todolist.task;
 
 import br.com.todolist.user.User;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +18,14 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
+    // Dentro da classe TaskController
     @PostMapping("/")
-    public ResponseEntity create(@RequestBody Task task, @AuthenticationPrincipal User user) {
-        task.setUser(user); // Associa o usuário logado à tarefa
-        var createdTask = this.taskService.create(task);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
+    public ResponseEntity create(@Valid @RequestBody TaskCreateDTO taskDTO, @AuthenticationPrincipal User user) {
+        var createdTask = this.taskService.create(taskDTO, user);
+        // Podemos retornar o DTO de resposta que já tínhamos, para ser consistente
+        return ResponseEntity.status(HttpStatus.CREATED).body(new TaskDTO(createdTask));
     }
 
-    // Adicionar este método dentro da classe TaskController
-    // Dentro da classe TaskController
     @GetMapping("/")
     public List<TaskDTO> list(@AuthenticationPrincipal User user) {
         return this.taskService.list(user.getId());

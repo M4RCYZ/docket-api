@@ -15,7 +15,6 @@ public class TaskDTO {
     private String priority;
     private LocalDateTime createdAt;
 
-    // Construtor para facilitar a conversão de Task para TaskDTO
     public TaskDTO(Task task) {
         this.id = task.getId();
         this.title = task.getTitle();

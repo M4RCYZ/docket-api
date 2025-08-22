@@ -1,5 +1,6 @@
 package br.com.todolist.task;
 
+import br.com.todolist.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,20 @@ public class TaskService {
     private TaskRepository taskRepository;
 
     // O método não lida com HTTP, apenas recebe o objeto e trabalha com ele.
-    public Task create(Task task) {
-        return this.taskRepository.save(task);
+    // O método create agora recebe o DTO e o User
+    public Task create(TaskCreateDTO taskDTO, User user) {
+        Task newTask = new Task();
+        // Copiamos os dados do DTO para a nova entidade
+        newTask.setTitle(taskDTO.getTitle());
+        newTask.setDescription(taskDTO.getDescription());
+        newTask.setStartAt(taskDTO.getStartAt());
+        newTask.setEndAt(taskDTO.getEndAt());
+        newTask.setPriority(taskDTO.getPriority());
+
+        // Associamos o usuário logado
+        newTask.setUser(user);
+
+        return this.taskRepository.save(newTask);
     }
 
     // Adicionar este método dentro da classe TaskService
