@@ -4,6 +4,7 @@ package br.com.todolist.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod; // Importe
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,10 +20,15 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/users/").permitAll()
+                        // Libera o endpoint de criação de usuário
+                        .requestMatchers(HttpMethod.POST, "/users/").permitAll()
+                        // Libera todos os endpoints do Swagger
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+                        // Exige autenticação para todas as outras requisições
                         .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults()) // <-- Agora usamos o filtro padrão do Spring
+                .httpBasic(withDefaults())
+                .formLogin(withDefaults()) // Adicionamos para ser explícito
                 .build();
     }
 }
