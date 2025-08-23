@@ -55,13 +55,13 @@ API RESTful completa para um gerenciador de tarefas, construída com Java e Spri
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [git@github.com:M4RCYZ/docket-api.git](https://github.com/M4RCYZ/todolist-springboot-api.git)
-    cd todolist-springboot-api
+    git clone [git@github.com:M4RCYZ/docket-api.git](https://github.com/M4RCYZ/docket-api-springboot-api.git)
+    cd docket-api-springboot-api
     ```
 
 2.  **Configure o Banco de Dados:**
     -   Certifique-se de que o PostgreSQL está rodando.
-    -   Crie um novo banco de dados chamado `todolist`.
+    -   Crie um novo banco de dados chamado `docket`.
 
 3.  **Configure as Variáveis de Ambiente:**
     -   Na pasta `src/main/resources`, renomeie o arquivo `application.yml.example` para `application.yml`.
